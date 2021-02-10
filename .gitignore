@@ -9,3 +9,5 @@ config/
 *.bak
 *.bak.js
 *.dev
+android/apk/*
+android/bin/*

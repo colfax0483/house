@@ -555,17 +555,17 @@ def build_dyload_script(dy_dic, is_mini = False):
     return dyload_script
 
 def refresh():
-    with open('./templates/env.html') as f:
+    with open('./templates/env.html', encoding='UTF-8') as f:
         env_html = f.read()
-    with open('./templates/enum.html') as f:
+    with open('./templates/enum.html', encoding='UTF-8') as f:
         enum_html = f.read()
-    with open('./templates/hooks.html') as f:
+    with open('./templates/hooks.html', encoding='UTF-8') as f:
         hooks_html = f.read()
-    with open('./templates/intercepts.html') as f:
+    with open('./templates/intercepts.html', encoding='UTF-8') as f:
         intercepts_html = f.read()
-    with open('./templates/preload.html') as f:
+    with open('./templates/preload.html', encoding='UTF-8') as f:
         preload_html = f.read()
-    with open('./templates/monitor.html') as f:
+    with open('./templates/monitor.html', encoding='UTF-8') as f:
         monitor_html = f.read()
     return render_template('index.html', uuid=str(random_token), env=env_html, enum=enum_html, hooks=hooks_html,
                            intercepts=intercepts_html, preload=preload_html, monitor=monitor_html)

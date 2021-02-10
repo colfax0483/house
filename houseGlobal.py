@@ -20,11 +20,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from flask import Flask
+from flask import Flask, request, render_template, flash, redirect, url_for, session, Response
 from flask_socketio import SocketIO, emit
 import flask_login
 from threading import Lock
 import uuid
+import os
+import datetime
+import time
+import requests
+import json
 
 class houseGlobal:
 	def __init__(self):

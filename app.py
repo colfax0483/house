@@ -20,18 +20,39 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from flask import Flask, request, render_template, flash, redirect, url_for, session, Response
 from houseGlobal import house_global, app, socketio, random_token
 from houseStatic import *
 from houseUtil import *
 from houseSock import *
 from sys import argv
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import Headers
 import uuid, flask_login
 
+from android import Parser
 import logging
 
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
+ALLOWED_EXT = set(['apk'])
+
+target = {}
+global package
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1] in ALLOWED_EXT
+
+#makepath
+def makeDir(path):
+    if os.path.exists(path):
+        if not os.path.isdir(path):
+            os.remove(path)
+            os.makedirs(path)
+        else:
+            os.makedirs(path)
 
 @app.route('/')
 def hello():
@@ -40,6 +61,48 @@ def hello():
         return refresh()
     else:
         return ''
+
+@app.route('/android', methods = ['POST'])
+def android():
+
+    global package
+    global target
+
+    if request.method == 'POST':
+        apk_file = request.files['file']
+        if request.files['file']:
+            file = request.files['file']
+            if allowed_file(file.filename):
+                file.save('android/apk/' + secure_filename(file.filename))
+                file = file.filename
+            else: file=0
+        else:
+            file = 0
+        
+        pkg = ""
+
+        if os.path.exists('android/apk/' + apk_file.filename[:-4] + '/AndroidManifest.xml'):
+            f = open('android/apk/' + apk_file.filename[:-4] + '/AndroidManifest.xml', "r")
+
+            line = f.readline()
+
+            words = line.split(" ")
+            for word in words:
+                if "package=\"" in word:
+                    pkg = word[9:-1]
+            f.close()
+        else:
+            pkg = Parser.apktool.unpack('android/apk/' + apk_file.filename)
+        print(pkg)
+        target["apk"] = "android/apk/" + apk_file.filename
+
+        if "install" in request.form:
+            os.system("adb install %s" %(target["apk"]))
+
+
+
+    return redirect(url_for('/'))
+
 
 @app.route('/messages', methods=['GET'])
 def message():
@@ -195,7 +258,7 @@ Communications will happen over USB, make sure have your android device plugged 
 
     app.jinja_env.auto_reload = True
     app.config['TEMPLATES_AUTO_RELOAD'] = True
-    socketio.run(app, host = host, port = port, debug=False)
+    socketio.run(app, host = host, port = port, debug=True)
     
 
 if __name__ == '__main__':
