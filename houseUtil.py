@@ -557,6 +557,8 @@ def build_dyload_script(dy_dic, is_mini = False):
 def refresh():
     with open('./templates/env.html', encoding='UTF-8') as f:
         env_html = f.read()
+    with open('./templates/stat.html', encoding='UTF-8') as f:
+        stat_html = f.read()
     with open('./templates/enum.html', encoding='UTF-8') as f:
         enum_html = f.read()
     with open('./templates/hooks.html', encoding='UTF-8') as f:
@@ -567,7 +569,7 @@ def refresh():
         preload_html = f.read()
     with open('./templates/monitor.html', encoding='UTF-8') as f:
         monitor_html = f.read()
-    return render_template('index.html', uuid=str(random_token), env=env_html, enum=enum_html, hooks=hooks_html,
+    return render_template('index.html', uuid=str(random_token), env=env_html, stat=stat_html, enum=enum_html, hooks=hooks_html,
                            intercepts=intercepts_html, preload=preload_html, monitor=monitor_html)
 
 

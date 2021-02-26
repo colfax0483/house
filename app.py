@@ -36,7 +36,7 @@ import logging
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
-ALLOWED_EXT = set(['apk'])
+ALLOWED_EXT = set(['apk', 'ipa'])
 
 target = {}
 global package
@@ -99,11 +99,12 @@ def android():
         if "install" in request.form:
             os.system("adb install %s" %(target["apk"]))
 
+    return json.dumps(house_global.stat)
 
-
-    return redirect(url_for('/'))
-
-
+@app.route('/stat', methods=['GET'])
+def stat():
+    return json.dumps(house_global.stat)
+    
 @app.route('/messages', methods=['GET'])
 def message():
     return json.dumps(house_global.messages)

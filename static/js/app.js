@@ -22,6 +22,7 @@ var monitor_settings = {
     'SWITCH_IPC': 1,
     'SWITCH_MISC': 1
 }
+var stat_Settings = {"STAT_INSTALL": 0, "STAT_PERMISSION": 0, "STAT_EXPORTED": 0}
 var preload_settings = {"PRELOAD_STETHO": 0, "PRELOAD_SSLSTRIP": 0, "PRELOAD_SETPROXY": 0}
 var monitor_refresh = false;
 
@@ -43,6 +44,15 @@ function doEnv() {
 
 function sideloadStetho() {
     socket.emit("loadStetho")
+}
+
+
+funciton runstat(){
+    stat_Settings['STAT_INSTALL'] = document.getElementById("STAT_INSTALL").checked ? 1 : 0
+    stat_Settings['STAT_PERMISSION'] = document.getElementsById("STAT_PERMISSION").checked ? 1 : 0
+    stat_Settings['STAT_EXPORTED'] = document.getElementById("STAT_EXPORTED").checked ? 1 : 0
+    console.log(stat_Settings)
+    socket.emit("runstat", {stat_Settings:stat_Settings})
 }
 
 function runpreload() {

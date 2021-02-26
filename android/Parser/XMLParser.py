@@ -19,7 +19,8 @@ def searchString(stext, pwd):
 def xml(apk):
     #output.write("[Schemes]\n")
     pwd = apk[:-4]
-    AndroidManifest = pwd + "/AndroidManifest.xml"
+    # AndroidManifest = pwd + "/AndroidManifest.xml"
+    AndroidManifest = "./AndroidManifest.xml"
     tree = ElementTree.parse(AndroidManifest)
     result = {}
     result_list = list()
@@ -59,5 +60,5 @@ def xml(apk):
 
 if __name__ == "__main__":
     #output = open(sys.argv[2], "w", encoding="utf-8")
-    xml(sys.argv[1])
+    print(xml(sys.argv[1]))
     #output.close()

@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <br />
+    <!--------File Upload start------------->
+    <form class=was-validated" action="./android" method="POST" enctype = "multipart/form-data">
+        <div id="file_info">
+            <div class="bg-danger">
+                <p class="text-warning"><i class="glyphicon glyphicon-plus"></i> Upload Package File</p>
+                <div class="input-group">
+                    <label class="input-group-btn">
+                        <span class="btn btn-primary">
+                            Browse&hellip; <input id="my-file-selecter" type="file" name = "file" style="display: none;" onchange="$('#upload-file-info').val($(this).val());" multiple>
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" id="upload-file-info" readonly>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" name="install" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                  Install APP
+                </label>
+              </div>
+            <span class="help-block">
+                    파일 용량 제한은 50MB입니다.
+                    허용된 확장자는 .APK입니다.
+            </span>
+            <div class="col-auto my-1">
+                <button type="submit" class="btn btn-primary" onclick='chkex(my-file-selecter.value);'>Submit</button>
+            </div>
+        </form>
+        </div>
+        <br />
+    <!--------File Upload end------------->
+    <div class="col-md-5">
+        <h3 class="display-4">Android Manifest</h3>
+    </div>

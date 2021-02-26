@@ -54,6 +54,7 @@ class houseGlobal:
 		self.enum_option = ''
 		self.onMessageException = ''
 		self.html_output = ""
+		self.stat = []
 		self.messages = []
 		self.monitor_message = {"FILEIO":[], "IPC": [], "WEBVIEW":[],"SQL":[], "HTTP":[], "MISC":[], "SHAREDPREFERENCES": []}
 		self.monitor_queue = set()
